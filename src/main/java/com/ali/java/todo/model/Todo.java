@@ -32,4 +32,9 @@ public class Todo {
     @JoinColumn(name = "categoryId")
     @JsonIgnore
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    private User user;
 }

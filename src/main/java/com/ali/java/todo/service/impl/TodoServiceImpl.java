@@ -3,6 +3,7 @@ package com.ali.java.todo.service.impl;
 import com.ali.java.todo.dto.CreateTodoDto;
 import com.ali.java.todo.dto.CreateUserDto;
 import com.ali.java.todo.exception.NotFoundException;
+import com.ali.java.todo.model.Category;
 import com.ali.java.todo.model.Todo;
 import com.ali.java.todo.model.User;
 import com.ali.java.todo.repository.CategoryRepository;
@@ -72,8 +73,20 @@ public class TodoServiceImpl implements TodoService {
         return "Deleted";
     }
 
-    private Todo toTodo(CreateTodoDto createUserDto){
+    private Todo toTodo(CreateTodoDto createDto){
 
-        return mapper.map(createUserDto, Todo.class);
+       // return mapper.map(createUserDto, Todo.class);
+        User user= new User();
+        user.setId(createDto.getUserId());
+        Category category = new Category();
+        category.setId(createDto.getCategoryId());
+        Todo todo = new Todo();
+        todo.setUser(user);
+        todo.setDone(createDto.getDone());
+        todo.setTitle(createDto.getTitle());
+        todo.setFavorite(createDto.getFavorite());
+        todo.setCategory(category);
+        todo.setDescription(createDto.getDescription());
+        return todo;
     }
 }
