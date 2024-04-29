@@ -22,8 +22,6 @@ import java.util.List;
 @Service
 public class TodoServiceImpl implements TodoService {
 
-
-    private final ModelMapper mapper;
     private final TodoRepository todoRepository;
 
 

@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final ModelMapper mapper;
     private final CategoryRepository categoryRepository;
 
     @Override
@@ -66,9 +65,16 @@ public class CategoryServiceImpl implements CategoryService {
         return "Deleted";
     }
 
-    private Category toCategory(CreateCategoryDto createUserDto){
+    private Category toCategory(CreateCategoryDto createDto){
 
-        return mapper.map(createUserDto, Category.class);
+       // return mapper.map(createUserDto, Category.class);
+          User user = new User();
+          user.setId(createDto.getUserId());
+          Category category = new Category();
+          category.setUser(user);
+          category.setName(createDto.getName());
+          category.setDescription(createDto.getDescription());
+          return category;
     }
 
 
