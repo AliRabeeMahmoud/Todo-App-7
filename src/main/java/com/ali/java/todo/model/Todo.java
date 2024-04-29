@@ -24,8 +24,6 @@ public class Todo {
 
     private String description;
 
-
-
     private Boolean done;
 
     private Boolean favorite;

@@ -1,5 +1,7 @@
 package com.ali.java.todo.controller;
 
+import com.ali.java.todo.dto.CreateCategoryDto;
+import com.ali.java.todo.exception.NotFoundException;
 import com.ali.java.todo.model.Category;
 import com.ali.java.todo.service.CategoryService;
 import com.ali.java.todo.service.TodoService;
@@ -23,28 +25,28 @@ public class CategoryController  {
 
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+    public Category createCategory(@RequestBody CreateCategoryDto category) {
+        return categoryService.save(category);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return new ResponseEntity<>(categoryService.update(category), HttpStatus.CREATED);
+    public Category updateCategory(@PathVariable Long id, @RequestBody CreateCategoryDto category) {
+        return categoryService.update(category);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
+    public List<Category> getAllCategories() {
+        return categoryService.findAll();
     }
 
 
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
-        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
+    public Category getCategory(@PathVariable Long id) throws NotFoundException {
+        return categoryService.findById(id);
     }
 
 

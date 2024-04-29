@@ -1,9 +1,15 @@
 package com.ali.java.todo.service.impl;
 
+import com.ali.java.todo.dto.CreateCategoryDto;
+import com.ali.java.todo.dto.CreateTodoDto;
+import com.ali.java.todo.dto.CreateUserDto;
+import com.ali.java.todo.exception.NotFoundException;
 import com.ali.java.todo.model.Category;
+import com.ali.java.todo.model.User;
 import com.ali.java.todo.repository.CategoryRepository;
 import com.ali.java.todo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +20,18 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-
+    private final ModelMapper mapper;
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Category save(Category category) {
+    public Category save(CreateCategoryDto category) {
 
-        return categoryRepository.save(category);
+        return categoryRepository.save(toCategory(category));
     }
 
     @Override
-    public Category update(Category category) {
+    public Category update(CreateCategoryDto categoryDto) {
+        Category category= toCategory(categoryDto);
         Category oldCategory = categoryRepository.findById(category.getId()).orElse(null);
         oldCategory.setDescription(category.getDescription());
         oldCategory.setName(category.getName());
@@ -39,9 +46,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(Long id) {
+    public Category findById(Long id) throws NotFoundException {
 
-        return categoryRepository.findById(id).orElse(null);
+        Category category= categoryRepository.findById(id).orElse(null);
+        if(category!=null){
+            return category ;
+        }
+
+        throw new NotFoundException("the requested user does not exist");
+
     }
 
 
@@ -51,6 +64,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.deleteById(id);
         return "Deleted";
+    }
+
+    private Category toCategory(CreateCategoryDto createUserDto){
+
+        return mapper.map(createUserDto, Category.class);
     }
 
 

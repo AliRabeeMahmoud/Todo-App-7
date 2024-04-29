@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
         }
 
             throw new NotFoundException("the requested user does not exist");
-
     }
 
     @Override

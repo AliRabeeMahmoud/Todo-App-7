@@ -1,13 +1,14 @@
 package com.ali.java.todo.service;
 
+import com.ali.java.todo.dto.CreateTodoDto;
 import com.ali.java.todo.model.Todo;
 
 import java.util.List;
 
 public interface TodoService {
 
-    Todo save(Todo todoDto);
-    Todo update(Todo todoDto);
+    Todo save(CreateTodoDto todoDto);
+    Todo update(CreateTodoDto todoDto);
 
     List<Todo> findAll();
 
